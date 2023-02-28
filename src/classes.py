@@ -4,27 +4,43 @@ from abc import ABC
 class Storage(ABC):
 
 
-    def __init__(self, items: dict, capacity: int):
+    def __init__(self, items: dict):
         self.items = items
-        self.capacity = capacity
+        self.capacity = 100
 
-    def add(self):
-        pass
+    def add(self, description: str, count: int):
+        if self.items.get(description, False) is False:
+            self.items[description] = count
+        else:
+            self.items[description] = self.items[description] + count
 
-    def remove(self):
-        pass
+    def remove(self, description: str, count: int):
+        if self.items.get(description, False) is False:
+            print("No this items")
+        else:
+            if self.items[description] - count <= 0:
+                del self.items[description]
+            else:
+                self.items[description] = self.items[description] - count
 
     def get_free_space(self):
-        pass
+        for item in self.items.values():
+            self.capacity -= item
+        return self.capacity
 
     def get_items(self):
-        pass
+        return self.items
 
     def get_unique_items_count(self):
-        pass
+        unique_items = []
+        for item in self.items:
+            if "уникальн" in item.lower():
+                unique_items.append(item)
+            return unique_items
+
 
 class Store(Storage):
-    pass
+    capacity = 100
 
-class Shoop(Storage):
-    pass
+class Shop(Storage):
+    capacity = 20
