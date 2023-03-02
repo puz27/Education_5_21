@@ -4,22 +4,22 @@ from abc import ABC, abstractmethod
 class Storage(ABC):
 
 
-    def __init__(self, items: dict):
+    def __init__(self, items: dict, capacity: int):
         self.items = items
-        self.capacity = 200
+        self.capacity = capacity
 
     def add(self, description: str, count: int):
         # check item for availability and space
 
         # add new item and check space
         if self.items.get(description, False) is False:
-            if count >= self.get_free_space():
+            if count > self.get_free_space():
                 print("No free space")
             else:
                 self.items[description] = count
         # add existing item and check space
         else:
-            if self.items[description] + count >= self.get_free_space():
+            if count > self.get_free_space():
                 print("No free space")
             else:
                 self.items[description] = self.items[description] + count
@@ -57,31 +57,32 @@ class Storage(ABC):
 
 
 class Store(Storage):
-    def __init__(self, items: dict):
-        super().__init__(items)
-        self.capacity = 100
+    def __init__(self, items: dict, capacity: int = 100):
+        super().__init__(items, capacity)
+        self.capacity = capacity
 class Shop(Storage):
 
-    def __init__(self, items: dict):
-        super().__init__(items)
-        self.capacity = 20
+    def __init__(self, items: dict, capacity: int = 20, max_diff_items: int = 5):
+        super().__init__(items, capacity)
+        self.capacity = capacity
+        self.max_diff_items = max_diff_items
 
     def add(self, description: str, count: int):
         # check item for availability and space
 
         # add new item and check space
         if self.items.get(description, False) is False:
-            if count >= self.capacity:
+            if count > self.get_free_space():
                 print("No free space")
-            elif len(self.items) > 5:
-                print("Different items more than 5!")
+            elif len(self.get_items()) >= self.max_diff_items:
+                print(f"Different items more than {self.max_diff_items}!")
             else:
                 self.items[description] = count
         # add existing item and check space
         else:
-            if self.items[description] + count >= self.capacity:
+            if count > self.get_free_space():
                 print("No free space")
-            elif len(self.items) > 5:
-                print("Different items more than 5!")
+            elif len(self.get_items()) >= self.max_diff_items:
+                print(f"Different items more than {self.max_diff_items }!")
             else:
                 self.items[description] = self.items[description] + count
