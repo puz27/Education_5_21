@@ -1,7 +1,4 @@
-from abc import ABC, abstractmethod
-
-
-class Storage(ABC):
+class Storage():
 
 
     def __init__(self, items: dict, capacity: int):
@@ -86,3 +83,13 @@ class Shop(Storage):
                 print(f"Different items more than {self.max_diff_items }!")
             else:
                 self.items[description] = self.items[description] + count
+
+
+class Request:
+
+    def __init__(self, amount, product):
+        self.amount = amount
+        self.product = product
+
+    def info(self):
+        return self.amount, self.product

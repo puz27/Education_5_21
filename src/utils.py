@@ -1,24 +1,24 @@
 from classes import *
-#
-# #
-# data = {}
-# test = Store(data)
-#
-# test.add("sprite унИкальный", 3)
-# test.add("sprite унИкальный", 9)
-# test.add("cola", 11)
-# test.add("cola", 10)
-# print(test.get_free_space())
-# print(test.get_items())
-data2 = {"тестовый товар": 5}
-test2 = Shop(data2)
-print("-----")
-print(test2.capacity)
-test2.add("cola", 5)
-test2.add("cola", 5)
-test2.add("cola", 1)
-test2.add("sprite", 1)
+data_1 = {"фанта": 20, "кола": 100, "спрайт": 50}
+data_2 = {}
+my_store = Store(data_1)
+my_shop = Shop(data_2)
+
+input_data = ""
+while True:
+    input_data = input("Введите количество и название\n")
+    if input_data == "стоп":
+        break
+    else:
+        user = Request(input_data.split()[0], input_data.split()[1])
+        print(user.info())
+        print("-------------------------------------------")
+
+        my_store.remove(user.info()[0], int(user.info()[1]))
+        my_shop.add(user.info()[0], int(user.info()[1]))
 
 
+        print("-------------------------------------------")
+        print("СКЛАД:", my_store.get_items())
+        print("МАГАЗИН:", my_shop.get_items())
 
-print(test2.get_items())
